@@ -105,36 +105,22 @@
         <button class="visit-site-button" onclick="window.open('https://irispelled.com', '_blank');">Visit irispelled.com</button>
     </div>
 
-    <!-- JavaScript to play/pause videos and handle triggers -->
+    <!-- JavaScript to handle play/pause videos and stop sound when switching markers -->
     <script>
         var isPlaying = false;
+        var currentVideo = null;
 
         function togglePlayPause() {
-            var video2 = document.getElementById('video2');
-            var video6 = document.getElementById('video6');
-            var video8 = document.getElementById('video8');
-            var button = document.getElementById('play-pause-button');
-
-            if (!isPlaying) {
-                // Play the videos
-                video2.muted = false;
-                video6.muted = false;
-                video8.muted = false;
-
-                video2.play();
-                video6.play();
-                video8.play();
-
-                button.textContent = "Pause Videos";
-                isPlaying = true;
-            } else {
-                // Pause the videos
-                video2.pause();
-                video6.pause();
-                video8.pause();
-
-                button.textContent = "Play Videos";
-                isPlaying = false;
+            if (currentVideo) {
+                if (isPlaying) {
+                    currentVideo.pause();
+                    document.getElementById('play-pause-button').textContent = "Play Videos";
+                } else {
+                    currentVideo.muted = false;
+                    currentVideo.play();
+                    document.getElementById('play-pause-button').textContent = "Pause Videos";
+                }
+                isPlaying = !isPlaying;
             }
         }
 
@@ -148,6 +134,10 @@
             video6.pause();
             video8.pause();
 
+            video2.currentTime = 0;
+            video6.currentTime = 0;
+            video8.currentTime = 0;
+
             isPlaying = false; // Reset the play state
             document.getElementById('play-pause-button').textContent = "Play Videos"; // Reset button text
         }
@@ -156,7 +146,16 @@
         var markers = document.querySelectorAll('a-marker');
         markers.forEach(function(marker) {
             marker.addEventListener('markerFound', function() {
-                stopAllVideos();
+                stopAllVideos(); // Stop all other videos
+                if (marker.id === 'marker-video2') {
+                    currentVideo = document.getElementById('video2');
+                } else if (marker.id === 'marker-video6') {
+                    currentVideo = document.getElementById('video6');
+                } else if (marker.id === 'marker-video8') {
+                    currentVideo = document.getElementById('video8');
+                } else {
+                    currentVideo = null; // No video for image markers
+                }
             });
         });
     </script>
