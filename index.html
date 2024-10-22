@@ -16,7 +16,7 @@
             z-index: 10;
         }
 
-        .visit-site-button {
+        .visit-site-button, .play-videos-button {
             padding: 10px 20px;
             background-color: pink;
             border: none;
@@ -24,6 +24,7 @@
             font-size: 16px;
             cursor: pointer;
             color: white;
+            margin: 5px;
         }
 
         .pink-border {
@@ -56,10 +57,10 @@
             <img id="model-image9" src="model9.png">
             <a-asset-item id="animated-model" src="dancing-character.glb"></a-asset-item>
 
-            <!-- Adding videos to assets with muted, autoplay and playsinline -->
-            <video id="video2" src="video2.mp4" autoplay loop muted="true" playsinline="true"></video>
-            <video id="video6" src="video6.mp4" autoplay loop muted="true" playsinline="true"></video>
-            <video id="video8" src="video8.mp4" autoplay loop muted="true" playsinline="true"></video>
+            <!-- Adding videos to assets -->
+            <video id="video2" src="video2.mp4" preload="auto" playsinline muted loop></video>
+            <video id="video6" src="video6.mp4" preload="auto" playsinline muted loop></video>
+            <video id="video8" src="video8.mp4" preload="auto" playsinline muted loop></video>
         </a-assets>
 
         <!-- Define the markers and their associated images and animations -->
@@ -91,17 +92,17 @@
 
         <!-- Replace images with videos for markers 2, 6, 8 -->
         <a-marker type="pattern" url="trigger2.patt">
-            <a-video src="#video2" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-video>
+            <a-video id="video2-marker" src="#video2" position="0 0 0" scale="1 1 1" rotation="-120 0 0" playsinline></a-video>
             <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
         <a-marker type="pattern" url="trigger6.patt">
-            <a-video src="#video6" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-video>
+            <a-video id="video6-marker" src="#video6" position="0 0 0" scale="1 1 1" rotation="-120 0 0" playsinline></a-video>
             <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
         <a-marker type="pattern" url="trigger8.patt">
-            <a-video src="#video8" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-video>
+            <a-video id="video8-marker" src="#video8" position="0 0 0" scale="1 1 1" rotation="-120 0 0" playsinline></a-video>
             <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
@@ -119,11 +120,19 @@
         <a-entity camera></a-entity>
     </a-scene>
 
-    <!-- Button linking to the website -->
+    <!-- Buttons for actions -->
     <div class="button-container">
-        <button class="visit-site-button" onclick="window.open('https://irispelled.com', '_blank');">
-            Visit irispelled.com
-        </button>
+        <button class="play-videos-button" onclick="playVideos()">Play Videos</button>
+        <button class="visit-site-button" onclick="window.open('https://irispelled.com', '_blank');">Visit irispelled.com</button>
     </div>
+
+    <!-- JavaScript to play videos -->
+    <script>
+        function playVideos() {
+            document.getElementById('video2').play();
+            document.getElementById('video6').play();
+            document.getElementById('video8').play();
+        }
+    </script>
 </body>
 </html>
