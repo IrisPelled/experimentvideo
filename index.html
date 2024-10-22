@@ -58,9 +58,9 @@
             <a-asset-item id="animated-model" src="dancing-character.glb"></a-asset-item>
 
             <!-- Adding videos to assets -->
-            <video id="video2" src="video2.mp4" preload="auto" playsinline muted loop></video>
-            <video id="video6" src="video6.mp4" preload="auto" playsinline muted loop></video>
-            <video id="video8" src="video8.mp4" preload="auto" playsinline muted loop></video>
+            <video id="video2" src="video2.mp4" preload="auto" playsinline loop></video>
+            <video id="video6" src="video6.mp4" preload="auto" playsinline loop></video>
+            <video id="video8" src="video8.mp4" preload="auto" playsinline loop></video>
         </a-assets>
 
         <!-- Define the markers and their associated images and animations -->
@@ -126,12 +126,20 @@
         <button class="visit-site-button" onclick="window.open('https://irispelled.com', '_blank');">Visit irispelled.com</button>
     </div>
 
-    <!-- JavaScript to play videos -->
+    <!-- JavaScript to play videos with sound -->
     <script>
         function playVideos() {
-            document.getElementById('video2').play();
-            document.getElementById('video6').play();
-            document.getElementById('video8').play();
+            var video2 = document.getElementById('video2');
+            var video6 = document.getElementById('video6');
+            var video8 = document.getElementById('video8');
+
+            video2.muted = false; // Unmute the videos
+            video6.muted = false;
+            video8.muted = false;
+
+            video2.play(); // Play the videos
+            video6.play();
+            video8.play();
         }
     </script>
 </body>
