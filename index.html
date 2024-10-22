@@ -64,56 +64,35 @@
         </a-assets>
 
         <!-- Define the markers and their associated images and animations -->
-        <a-marker type="pattern" url="trigger.patt">
+        <a-marker type="pattern" url="trigger.patt" id="marker1">
             <a-image src="#model-image" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-image>
             <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
-        <!-- Additional markers for models 1, 3, 4, 5, 7, 9 -->
-        <a-marker type="pattern" url="trigger1.patt">
+        <a-marker type="pattern" url="trigger1.patt" id="marker2">
             <a-image src="#model-image1" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-image>
             <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
-        <a-marker type="pattern" url="trigger3.patt">
-            <a-image src="#model-image3" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-image>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
-        </a-marker>
-
-        <a-marker type="pattern" url="trigger4.patt">
-            <a-image src="#model-image4" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-image>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
-        </a-marker>
-
-        <a-marker type="pattern" url="trigger5.patt">
-            <a-image src="#model-image5" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-image>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
-        </a-marker>
-
         <!-- Replace images with videos for markers 2, 6, 8 -->
-        <a-marker type="pattern" url="trigger2.patt">
+        <a-marker type="pattern" url="trigger2.patt" id="marker-video2">
             <a-video id="video2-marker" src="#video2" position="0 0 0" scale="1 1 1" rotation="-120 0 0" playsinline></a-video>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
-        <a-marker type="pattern" url="trigger6.patt">
+        <a-marker type="pattern" url="trigger6.patt" id="marker-video6">
             <a-video id="video6-marker" src="#video6" position="0 0 0" scale="1 1 1" rotation="-120 0 0" playsinline></a-video>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
-        <a-marker type="pattern" url="trigger8.patt">
+        <a-marker type="pattern" url="trigger8.patt" id="marker-video8">
             <a-video id="video8-marker" src="#video8" position="0 0 0" scale="1 1 1" rotation="-120 0 0" playsinline></a-video>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
-        <a-marker type="pattern" url="trigger7.patt">
+        <a-marker type="pattern" url="trigger7.patt" id="marker7">
             <a-image src="#model-image7" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-image>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
-        <a-marker type="pattern" url="trigger9.patt">
+        <a-marker type="pattern" url="trigger9.patt" id="marker9">
             <a-image src="#model-image9" position="0 0 0" scale="1 1 1" rotation="-120 0 0"></a-image>
-            <a-entity gltf-model="#animated-model" position="0.7 0 1" scale="0.7 0.7 0.7" rotation="-120 0 0"></a-entity>
         </a-marker>
 
         <!-- Camera -->
@@ -122,25 +101,64 @@
 
     <!-- Buttons for actions -->
     <div class="button-container">
-        <button class="play-videos-button" onclick="playVideos()">Play Videos with Sound</button>
+        <button id="play-pause-button" class="play-videos-button" onclick="togglePlayPause()">Play/Pause Videos</button>
         <button class="visit-site-button" onclick="window.open('https://irispelled.com', '_blank');">Visit irispelled.com</button>
     </div>
 
-    <!-- JavaScript to play videos with sound -->
+    <!-- JavaScript to play/pause videos and handle triggers -->
     <script>
-        function playVideos() {
+        var isPlaying = false;
+
+        function togglePlayPause() {
+            var video2 = document.getElementById('video2');
+            var video6 = document.getElementById('video6');
+            var video8 = document.getElementById('video8');
+            var button = document.getElementById('play-pause-button');
+
+            if (!isPlaying) {
+                // Play the videos
+                video2.muted = false;
+                video6.muted = false;
+                video8.muted = false;
+
+                video2.play();
+                video6.play();
+                video8.play();
+
+                button.textContent = "Pause Videos";
+                isPlaying = true;
+            } else {
+                // Pause the videos
+                video2.pause();
+                video6.pause();
+                video8.pause();
+
+                button.textContent = "Play Videos";
+                isPlaying = false;
+            }
+        }
+
+        // Function to stop all videos when a new marker is detected
+        function stopAllVideos() {
             var video2 = document.getElementById('video2');
             var video6 = document.getElementById('video6');
             var video8 = document.getElementById('video8');
 
-            video2.muted = false; // Unmute the videos
-            video6.muted = false;
-            video8.muted = false;
+            video2.pause();
+            video6.pause();
+            video8.pause();
 
-            video2.play(); // Play the videos
-            video6.play();
-            video8.play();
+            isPlaying = false; // Reset the play state
+            document.getElementById('play-pause-button').textContent = "Play Videos"; // Reset button text
         }
+
+        // Listen for marker detections and stop videos when switching markers
+        var markers = document.querySelectorAll('a-marker');
+        markers.forEach(function(marker) {
+            marker.addEventListener('markerFound', function() {
+                stopAllVideos();
+            });
+        });
     </script>
 </body>
 </html>
